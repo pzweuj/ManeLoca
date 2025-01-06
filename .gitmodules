@@ -1,0 +1,3 @@
+[submodule "ManeSelectedBed"]
+	path = ManeSelectedBed
+	url = https://github.com/pzweuj/ManeSelectBed.git
