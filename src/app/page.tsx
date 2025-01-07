@@ -68,7 +68,11 @@ function Pagination({
           key={index}
           onClick={() => typeof page === 'number' && onPageChange(page)}
           disabled={page === '...'}
-          className={`px-3 py-1 rounded ${currentPage === page ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
+          className={`px-3 py-1 rounded ${
+            currentPage === page
+              ? 'bg-blue-500 text-white'
+              : 'bg-gray-200 hover:bg-gray-300'
+          }`}
         >
           {page}
         </button>
@@ -103,7 +107,7 @@ function Pagination({
   )
 }
 
-export default function Home() {
+export default function Page() {
   const [allData, setAllData] = useState<BedData[]>([])
   const [filteredData, setFilteredData] = useState<BedData[]>([])
   const [version, setVersion] = useState<'GRCh37' | 'GRCh38'>('GRCh37')
@@ -118,9 +122,9 @@ export default function Home() {
       const data = await loadBedData(version)
       setAllData(data)
       setFilteredData(data)
+      setCurrentPage(1)
       setColumnFilters({})
       setSearchResult([])
-      setCurrentPage(1) // 设置为第一页
     }
     loadData()
   }, [version])
@@ -142,8 +146,16 @@ export default function Home() {
       filtered = searchResult
     }
 
+    // 重新计算总页数
+    const totalPages = Math.ceil(filtered.length / pageSize)
+
+    // 如果当前页码大于总页数，则重置为最后一页
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages)
+    }
+
     setFilteredData(filtered)
-  }, [columnFilters, allData, searchResult])
+  }, [columnFilters, allData, searchResult, currentPage])
 
   const handleColumnFilter = (columnId: string, value: string) => {
     setColumnFilters(prev => ({
@@ -160,10 +172,8 @@ export default function Home() {
         .slice(0, 1)
 
       setSearchResult(result)
-
-      // 如果需要重置页码
       if (resetPage) {
-        setCurrentPage(1)
+        setCurrentPage(1) // 重置为第一页
       }
     } else {
       setSearchResult([])
@@ -198,20 +208,26 @@ export default function Home() {
 
       <CoordinateSearch onSearch={handleCoordinateSearch} />
 
+      {/* 优化后的表格容器 */}
       <div className="flex-1 overflow-hidden">
         <div className="h-full flex flex-col">
           <div className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
             <div className="min-w-[800px]">
+              {paginatedData.length === 0 ? (
+                <div className="text-center text-gray-500 py-4">No data found!</div>
+              ) : (
                 <DataTable 
                   columns={columns} 
                   data={paginatedData}
                   onColumnFilter={handleColumnFilter}
                 />
+              )}
             </div>
           </div>
         </div>
       </div>
 
+      {/* 分页组件 */}
       <div className="mt-4">
         <Pagination
           currentPage={currentPage}
