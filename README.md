@@ -2,6 +2,8 @@
 
 ManeLoca (MANE Locus) is a web tool that helps locate genomic coordinates within MANE Select transcripts.
 
+Use [ManeLoca Online](https://maneloca.vercel.app/) !
+
 ## Overview
 
 ManeLoca is a React-based web application that allows users to easily find the corresponding position in MANE Select transcripts given a genomic coordinate. MANE (Matched Annotation from NCBI and EMBL-EBI) Select transcripts represent a high-confidence set of human transcript annotations agreed upon by both NCBI and Ensembl.
