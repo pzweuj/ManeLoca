@@ -15,11 +15,11 @@ def merge_bed(exon_bed, intron_bed, output_bed):
 merge_bed(
     "ManeSelectedBed/GRCh37/Gencode.GRCh37.exon.cor.bed",
     "ManeSelectedBed/GRCh37/Gencode.GRCh37.intron.bed",
-    "data/GRCh37.bed"
+    "public/data/GRCh37.bed"
 )
 merge_bed(
     "ManeSelectedBed/GRCh38/Gencode.GRCh38.exon.cor.bed",
     "ManeSelectedBed/GRCh38/Gencode.GRCh38.intron.bed",
-    "data/GRCh38.bed"
+    "public/data/GRCh38.bed"
 )
 
