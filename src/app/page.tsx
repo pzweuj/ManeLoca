@@ -68,11 +68,7 @@ function Pagination({
           key={index}
           onClick={() => typeof page === 'number' && onPageChange(page)}
           disabled={page === '...'}
-          className={`px-3 py-1 rounded ${
-            currentPage === page
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-200 hover:bg-gray-300'
-          }`}
+          className={`px-3 py-1 rounded ${currentPage === page ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
         >
           {page}
         </button>
@@ -122,9 +118,10 @@ export default function Home() {
       const data = await loadBedData(version)
       setAllData(data)
       setFilteredData(data)
-      setCurrentPage(1)
+      // 初始化分页和过滤状态
       setColumnFilters({})
       setSearchResult([])
+      setCurrentPage(1) // 设置为第一页
     }
     loadData()
   }, [version])
@@ -147,7 +144,6 @@ export default function Home() {
     }
 
     setFilteredData(filtered)
-    setCurrentPage(1)
   }, [columnFilters, allData, searchResult])
 
   const handleColumnFilter = (columnId: string, value: string) => {
@@ -198,7 +194,6 @@ export default function Home() {
 
       <CoordinateSearch onSearch={handleCoordinateSearch} />
 
-      {/* 优化后的表格容器 */}
       <div className="flex-1 overflow-hidden">
         <div className="h-full flex flex-col">
           <div className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
@@ -213,7 +208,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 分页组件 */}
       <div className="mt-4">
         <Pagination
           currentPage={currentPage}
