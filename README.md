@@ -12,3 +12,19 @@ ManeLoca is a React-based web application that allows users to easily find the c
 - Convert genomic coordinates to MANE transcript positions
 - Support for GRCh38/GRCh37 genome assembly
 - Detailed transcript information display
+
+## Install
+
+```bash
+git clone https://github.com/pzweuj/ManeLoca.git
+cd ManeLoca
+git clone https://github.com/pzweuj/ManeSelectBed.git
+
+# Build databases
+python merge_data.py
+
+# Run
+npm install
+npm run dev
+```
+
