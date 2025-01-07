@@ -118,7 +118,6 @@ export default function Home() {
       const data = await loadBedData(version)
       setAllData(data)
       setFilteredData(data)
-      // 初始化分页和过滤状态
       setColumnFilters({})
       setSearchResult([])
       setCurrentPage(1) // 设置为第一页
@@ -153,7 +152,7 @@ export default function Home() {
     }))
   }
 
-  const handleCoordinateSearch = (chrom: string, pos: number) => {
+  const handleCoordinateSearch = (chrom: string, pos: number, resetPage: boolean) => {
     if (chrom && pos > 0) {
       const result = allData
         .filter(item => item.chrom === chrom && item.start <= pos && item.end >= pos)
@@ -161,6 +160,11 @@ export default function Home() {
         .slice(0, 1)
 
       setSearchResult(result)
+
+      // 如果需要重置页码
+      if (resetPage) {
+        setCurrentPage(1)
+      }
     } else {
       setSearchResult([])
     }

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 
 interface CoordinateSearchProps {
-  onSearch: (chrom: string, pos: number) => void
+  onSearch: (chrom: string, pos: number, resetPage: boolean) => void // 新增 resetPage 参数
 }
 
 export function CoordinateSearch({ onSearch }: CoordinateSearchProps) {
@@ -17,9 +17,9 @@ export function CoordinateSearch({ onSearch }: CoordinateSearchProps) {
 
       // 只有输入内容符合格式时才会触发搜索
       if (chrom && !isNaN(position)) {
-        onSearch(chrom, position)
+        onSearch(chrom, position, true) // 设置为 true 来重置页码
       } else {
-        onSearch('', 0) // 清空搜索结果
+        onSearch('', 0, false) // 清空搜索结果，不重置页码
       }
     }, 300) // 防抖时间设置为 300ms
 
