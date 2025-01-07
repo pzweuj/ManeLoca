@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 
 def merge_bed(exon_bed, intron_bed, output_bed):
@@ -11,6 +12,10 @@ def merge_bed(exon_bed, intron_bed, output_bed):
     df_merged = pd.concat([df_exon, df_intron])
     df_sort = df_merged.sort_values(by=["#chrom", "start"], ascending=[True, True])
     df_sort.to_csv(output_bed, sep="\t", index=False, header=None)
+
+if not os.path.exists("public/data"):
+    os.makedirs("public/data")
+
 
 merge_bed(
     "ManeSelectedBed/GRCh37/Gencode.GRCh37.exon.cor.bed",
