@@ -13,6 +13,7 @@
     "@radix-ui/react-switch": "^1.1.2",
     "@tanstack/react-table": "^8.20.6",
     "@tanstack/react-table-devtools": "^8.20.6",
+    "@tauri-apps/api": "^2",
     "next": "14.2.22",
     "react": "^18",
     "react-dom": "^18",
