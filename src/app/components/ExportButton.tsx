@@ -1,6 +1,6 @@
 import { BedData } from '../lib/types'
 import { writeTextFile } from '@tauri-apps/plugin-fs'
-import { save } from '@tauri-apps/plugin-dialog'
+import { save } from '@tauri-apps/plugin-dialog' // 引入文件保存对话框
 
 interface ExportButtonProps {
   data: BedData[]
@@ -18,17 +18,24 @@ export function ExportButton({ data, version, className }: ExportButtonProps) {
     ).join('\n')
     const tsvContent = `${headers}\n${rows}`
 
-    // 使用 Tauri 的文件保存对话框
-    const filePath = await save({
-      defaultPath: `maneloca_${version}_${new Date().toISOString()}.tsv`,
-      filters: [{
-        name: 'Tab Separated Values',
-        extensions: ['tsv']
-      }]
-    })
+    try {
+      // 使用 Tauri 的文件保存对话框
+      const filePath = await save({
+        defaultPath: `maneloca_${version}_${new Date().toISOString().slice(0, 10)}.tsv`, // 默认文件名
+        filters: [{
+          name: 'TSV Files',
+          extensions: ['tsv'] // 限制文件类型为 TSV
+        }]
+      })
 
-    if (filePath) {
-      await writeTextFile(filePath, tsvContent)
+      if (filePath) {
+        // 保存文件到用户选择的位置
+        await writeTextFile(filePath, tsvContent)
+        alert('File saved successfully!') // 提示用户保存成功
+      }
+    } catch (error) {
+      console.error('Error saving file:', error)
+      alert('Failed to save file.') // 提示用户保存失败
     }
   }
 
