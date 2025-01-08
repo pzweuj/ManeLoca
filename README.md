@@ -30,3 +30,9 @@ npm install
 npm run dev
 ```
 
+## Shot
+![preview](preview_shot.png)
+
+
+
+
