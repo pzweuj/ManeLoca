@@ -16,11 +16,13 @@
         "width": 1240,
         "height": 770,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "minWidth": 800,
+        "minHeight": 600
       }
     ],
     "security": {
-      "csp": null
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
     }
   },
   "bundle": {
@@ -28,7 +30,11 @@
     "targets": "all",
     "icon": [
       "icons/icon.ico",
-      "icons/icon.png"
-    ]
+      "icons/icon.png",
+      "icons/icon.icns",
+      "icons/icon.svg"
+    ],
+    "resources": [],
+    "externalBin": []
   }
 }
