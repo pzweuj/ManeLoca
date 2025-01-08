@@ -20,9 +20,9 @@ ManeLoca is a React-based web application that allows users to easily find the c
 ```bash
 git clone https://github.com/pzweuj/ManeLoca.git
 cd ManeLoca
-git clone https://github.com/pzweuj/ManeSelectBed.git
 
-# Build databases
+# database update (option)
+git clone https://github.com/pzweuj/ManeSelectBed.git
 python merge_data.py
 
 # Run
