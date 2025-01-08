@@ -1,6 +1,6 @@
 import { BedData } from '../lib/types'
-import { writeTextFile, BaseDirectory } from '@tauri-apps/api/fs'
-import { save } from '@tauri-apps/api/dialog'
+import { writeTextFile } from '@tauri-apps/plugin-fs'
+import { save } from '@tauri-apps/plugin-dialog'
 
 interface ExportButtonProps {
   data: BedData[]
