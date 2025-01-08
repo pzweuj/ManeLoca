@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react'
 
 interface CoordinateSearchProps {
-  onSearch: (chrom: string, pos: number, resetPage: boolean) => void // 新增 resetPage 参数
+  onSearch: (chrom: string, pos: number, resetPage: boolean) => void
+  className?: string
 }
 
-export function CoordinateSearch({ onSearch }: CoordinateSearchProps) {
+export function CoordinateSearch({ onSearch, className }: CoordinateSearchProps) {
   const [inputValue, setInputValue] = useState('')
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export function CoordinateSearch({ onSearch }: CoordinateSearchProps) {
   }, [inputValue, onSearch])
 
   return (
-    <div className="mb-4">
+    <div className={`flex items-center ${className}`}>
       <input
         type="text"
         value={inputValue}

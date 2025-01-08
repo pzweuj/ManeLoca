@@ -8,6 +8,7 @@ import { VersionSwitch } from './components/VersionSwitch'
 import { BedData } from './lib/types'
 import { CoordinateSearch } from './components/CoordinateSearch'
 import { FaGithub } from 'react-icons/fa'
+import { ExportButton } from './components/ExportButton'
 
 function Pagination({
   currentPage,
@@ -121,10 +122,33 @@ export default function Page() {
     const loadData = async () => {
       const data = await loadBedData(version)
       setAllData(data)
-      setFilteredData(data)
+      
+      // 先应用列筛选
+      let filtered = data
+      Object.entries(columnFilters).forEach(([columnId, value]) => {
+        if (value) {
+          filtered = filtered.filter(item =>
+            String(item[columnId as keyof BedData])
+              .toLowerCase()
+              .includes(value.toLowerCase())
+          )
+        }
+      })
+      
+      // 如果存在坐标搜索结果，则应用坐标搜索
+      if (searchResult.length > 0) {
+        // 确保搜索结果来自当前版本的数据
+        filtered = filtered.filter(item => 
+          searchResult.some(result => 
+            result.chrom === item.chrom &&
+            result.start === item.start &&
+            result.end === item.end
+          )
+        )
+      }
+      
+      setFilteredData(filtered)
       setCurrentPage(1)
-      setColumnFilters({})
-      setSearchResult([])
     }
     loadData()
   }, [version])
@@ -176,12 +200,16 @@ export default function Page() {
         .sort((a, b) => Math.abs(pos - a.start) - Math.abs(pos - b.start))
         .slice(0, 1)
 
+      // 更新搜索结果时同时更新过滤数据
       setSearchResult(result)
+      setFilteredData(result)
       if (resetPage) {
-        setCurrentPage(1) // 重置为第一页
+        setCurrentPage(1)
       }
     } else {
+      // 清空搜索时恢复所有数据
       setSearchResult([])
+      setFilteredData(allData)
     }
   }
 
@@ -211,7 +239,25 @@ export default function Page() {
         </div>
       </div>
 
-      <CoordinateSearch onSearch={handleCoordinateSearch} />
+      <div className="flex items-center gap-4 mb-4">
+        <div className="flex-1">
+          <div className="flex justify-between items-center gap-4">
+            <div className="flex-1">
+              <CoordinateSearch 
+                onSearch={handleCoordinateSearch} 
+                className="h-[42px]"
+              />
+            </div>
+            <div className="flex-shrink-0">
+              <ExportButton 
+                data={filteredData} 
+                version={version}
+                className="h-[42px]"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* 优化后的表格容器 */}
       <div className="flex-1 overflow-hidden">
