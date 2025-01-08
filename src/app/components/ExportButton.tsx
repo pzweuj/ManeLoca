@@ -1,5 +1,10 @@
+interface DataItem {
+  // 根据你的实际数据结构定义字段
+  [key: string]: string | number | boolean | null
+}
+
 interface ExportButtonProps {
-    data: any[]
+    data: DataItem[]
     version: 'GRCh37' | 'GRCh38'
     className?: string
   }
