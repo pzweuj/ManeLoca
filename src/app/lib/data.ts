@@ -8,7 +8,8 @@ export async function loadBedData(
   
   return text.split('\n')
     .map(line => {
-      const [chrom, start, end, location, symbol, refseq, ensembl, strand] = line.split('\t')
+      const trimmedLine = line.trimEnd()
+      const [chrom, start, end, location, symbol, refseq, ensembl, strand] = trimmedLine.split('\t')
       return {
         chrom,
         start: parseInt(start),
