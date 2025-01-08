@@ -132,6 +132,7 @@ export default function Page() {
   useEffect(() => {
     let filtered = allData
 
+    // 先处理列筛选
     Object.entries(columnFilters).forEach(([columnId, value]) => {
       if (value) {
         filtered = filtered.filter(item =>
@@ -142,20 +143,24 @@ export default function Page() {
       }
     })
 
+    // 如果坐标搜索有结果，优先显示坐标搜索结果
     if (searchResult.length > 0) {
       filtered = searchResult
     }
+
+    // 更新过滤后的数据
+    setFilteredData(filtered)
 
     // 重新计算总页数
     const totalPages = Math.ceil(filtered.length / pageSize)
 
     // 如果当前页码大于总页数，则重置为最后一页
-    if (currentPage > totalPages) {
+    if (currentPage > totalPages && totalPages > 0) {
       setCurrentPage(totalPages)
+    } else if (filtered.length === 0) {
+      setCurrentPage(1)  // 如果没有数据，重置到第一页
     }
-
-    setFilteredData(filtered)
-  }, [columnFilters, allData, searchResult, currentPage])
+  }, [columnFilters, allData, searchResult])
 
   const handleColumnFilter = (columnId: string, value: string) => {
     setColumnFilters(prev => ({
@@ -213,15 +218,14 @@ export default function Page() {
         <div className="h-full flex flex-col">
           <div className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
             <div className="min-w-[800px]">
-              {paginatedData.length === 0 ? (
-                <div className="text-center text-gray-500 py-4">No data found!</div>
-              ) : (
-                <DataTable 
-                  columns={columns} 
-                  data={paginatedData}
-                  onColumnFilter={handleColumnFilter}
-                />
-              )}
+              <DataTable 
+                columns={columns} 
+                data={paginatedData}
+                onColumnFilter={handleColumnFilter}
+              />
+              {paginatedData.length === 0 && (
+                <div className="text-center text-gray-500 py-4"></div>
+               )}
             </div>
           </div>
         </div>
