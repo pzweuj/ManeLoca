@@ -8,6 +8,7 @@ import { VersionSwitch } from './components/VersionSwitch'
 import { BedData } from './lib/types'
 import { CoordinateSearch } from './components/CoordinateSearch'
 import { FaGithub } from 'react-icons/fa'
+import { ExportButton } from './components/ExportButton'
 
 function Pagination({
   currentPage,
@@ -238,7 +239,25 @@ export default function Page() {
         </div>
       </div>
 
-      <CoordinateSearch onSearch={handleCoordinateSearch} />
+      <div className="flex items-center gap-4 mb-4">
+        <div className="flex-1">
+          <div className="flex justify-between items-center gap-4">
+            <div className="flex-1">
+              <CoordinateSearch 
+                onSearch={handleCoordinateSearch} 
+                className="h-[42px]"
+              />
+            </div>
+            <div className="flex-shrink-0">
+              <ExportButton 
+                data={filteredData} 
+                version={version}
+                className="h-[42px]"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* 优化后的表格容器 */}
       <div className="flex-1 overflow-hidden">
