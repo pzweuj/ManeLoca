@@ -1,10 +1,5 @@
 import { BedData } from '../lib/types'
 
-interface DataItem {
-  // 根据你的实际数据结构定义字段
-  [key: string]: string | number | boolean | null
-}
-
 interface ExportButtonProps {
     data: BedData[]
     version: 'GRCh37' | 'GRCh38'
