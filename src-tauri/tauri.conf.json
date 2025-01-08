@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "maneloca",
-  "version": "0.1.0",
-  "identifier": "com.pzweuj.maneloca.dev",
+  "version": "1.0.0",
+  "identifier": "com.pzweuj.maneloca.stable",
   "build": {
     "frontendDist": "../out",
     "devUrl": "http://localhost:3000",
@@ -12,9 +12,9 @@
   "app": {
     "windows": [
       {
-        "title": "maneloca",
-        "width": 800,
-        "height": 600,
+        "title": "ManeLoca",
+        "width": 1240,
+        "height": 770,
         "resizable": true,
         "fullscreen": false
       }
@@ -27,7 +27,8 @@
     "active": true,
     "targets": "all",
     "icon": [
-      "icons/favicon.ico"
+      "icons/icon.ico",
+      "icons/icon.png"
     ]
   }
 }
