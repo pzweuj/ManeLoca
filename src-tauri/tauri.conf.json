@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "maneloca",
+  "productName": "ManeLoca",
   "version": "1.0.0",
-  "identifier": "com.pzweuj.maneloca.stable",
+  "identifier": "com.pzweuj.maneloca",
   "build": {
     "frontendDist": "../out",
     "devUrl": "http://localhost:3000",
@@ -13,28 +13,22 @@
     "windows": [
       {
         "title": "ManeLoca",
-        "width": 1240,
-        "height": 770,
+        "width": 1280,
+        "height": 720,
         "resizable": true,
-        "fullscreen": false,
-        "minWidth": 800,
-        "minHeight": 600
+        "fullscreen": false
       }
     ],
     "security": {
-      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
+      "csp": null
     }
   },
   "bundle": {
     "active": true,
     "targets": "all",
     "icon": [
-      "icons/icon.ico",
       "icons/icon.png",
-      "icons/icon.icns",
-      "icons/icon.svg"
-    ],
-    "resources": [],
-    "externalBin": []
+      "icons/icon.ico"
+    ]
   }
 }
