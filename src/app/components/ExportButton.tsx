@@ -31,7 +31,6 @@ export function ExportButton({ data, version, className }: ExportButtonProps) {
       if (filePath) {
         // 保存文件到用户选择的位置
         await writeTextFile(filePath, tsvContent)
-        alert('File saved successfully!') // 提示用户保存成功
       }
     } catch (error) {
       console.error('Error saving file:', error)

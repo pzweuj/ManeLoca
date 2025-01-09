@@ -13,7 +13,7 @@
     "windows": [
       {
         "title": "ManeLoca",
-        "width": 1280,
+        "width": 1105,
         "height": 720,
         "resizable": true,
         "fullscreen": false
