@@ -2,7 +2,11 @@
 
 ManeLoca (MANE Locus) is a web tool that helps locate genomic coordinates within MANE Select transcripts.
 
-Use [ManeLoca Online](https://maneloca.vercel.app/) !
+## Use
+
+Use [ManeLoca Online](https://maneloca.vercel.app/) 
+
+or [Install in windows](https://github.com/pzweuj/ManeLoca/releases)
 
 ## Overview
 
