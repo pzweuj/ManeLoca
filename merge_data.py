@@ -1,6 +1,9 @@
 import os
 import pandas as pd
 
+# 获取当前脚本的绝对路径
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 def merge_bed(exon_bed, intron_bed, output_bed):
     df_exon = pd.read_csv(exon_bed, sep="\t", header=0)
     df_intron = pd.read_csv(intron_bed, sep="\t", header=0)
@@ -18,13 +21,13 @@ if not os.path.exists("public/data"):
 
 
 merge_bed(
-    "ManeSelectedBed/GRCh37/Gencode.GRCh37.exon.cor.bed",
-    "ManeSelectedBed/GRCh37/Gencode.GRCh37.intron.bed",
-    "public/data/GRCh37.bed"
+    os.path.join(script_dir, "ManeSelectBed/GRCh37/Gencode.GRCh37.exon.cor.bed"),
+    os.path.join(script_dir, "ManeSelectBed/GRCh37/Gencode.GRCh37.intron.bed"),
+    os.path.join(script_dir, "public/data/GRCh37.bed")
 )
 merge_bed(
-    "ManeSelectedBed/GRCh38/Gencode.GRCh38.exon.cor.bed",
-    "ManeSelectedBed/GRCh38/Gencode.GRCh38.intron.bed",
-    "public/data/GRCh38.bed"
+    os.path.join(script_dir, "ManeSelectBed/GRCh38/Gencode.GRCh38.exon.cor.bed"),
+    os.path.join(script_dir, "ManeSelectBed/GRCh38/Gencode.GRCh38.intron.bed"),
+    os.path.join(script_dir, "public/data/GRCh38.bed")
 )
 
