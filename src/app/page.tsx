@@ -150,7 +150,7 @@ export default function Page() {
       setCurrentPage(1)
     }
     loadData()
-  }, [version])
+  }, [version, columnFilters, searchResult])
 
   useEffect(() => {
     let filtered = allData
@@ -183,7 +183,7 @@ export default function Page() {
     } else if (filtered.length === 0) {
       setCurrentPage(1)  // 如果没有数据，重置到第一页
     }
-  }, [columnFilters, allData, searchResult])
+  }, [columnFilters, allData, searchResult, currentPage])
 
   const handleColumnFilter = (columnId: string, value: string) => {
     setColumnFilters(prev => ({

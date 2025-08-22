@@ -13,7 +13,7 @@ interface StableTableProps<TData> {
   onColumnFilter: (columnId: string, value: string) => void
 }
 
-export function StableTable<TData extends Record<string, any>>({
+export function StableTable<TData extends Record<string, unknown>>({
   columns,
   data,
   onColumnFilter,
