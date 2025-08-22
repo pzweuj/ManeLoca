@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { DataTable } from './components/DataTable/Table'
-import { columns } from './components/DataTable/columns'
 import { loadBedData } from './lib/data'
 import { VersionSwitch } from './components/VersionSwitch'
 import { BedData } from './lib/types'
@@ -265,7 +264,6 @@ export default function Page() {
           <div className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
             <div className="min-w-[800px]">
               <DataTable 
-                columns={columns} 
                 data={paginatedData}
                 onColumnFilter={handleColumnFilter}
               />
