@@ -148,6 +148,12 @@ export function StableTable<TData extends Record<string, unknown>>({
                         <input
                           type="text"
                           onChange={e => handleFilterChange(column.id, e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault()
+                              onExactMatchToggle(column.id, !exactMatchModes[column.id])
+                            }
+                          }}
                           className="w-full px-2 py-1 pr-8 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           style={{ userSelect: 'text' }}
                           placeholder="Filter..."
