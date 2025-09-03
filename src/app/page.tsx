@@ -113,6 +113,7 @@ export default function Page() {
   const [version, setVersion] = useState<'GRCh37' | 'GRCh38'>('GRCh37')
   const [currentPage, setCurrentPage] = useState(1)
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({})
+  const [exactMatchModes, setExactMatchModes] = useState<Record<string, boolean>>({})
   const [searchResult, setSearchResult] = useState<BedData[]>([])
 
   const pageSize = 20
@@ -126,11 +127,17 @@ export default function Page() {
       let filtered = data
       Object.entries(columnFilters).forEach(([columnId, value]) => {
         if (value) {
-          filtered = filtered.filter(item =>
-            String(item[columnId as keyof BedData])
-              .toLowerCase()
-              .includes(value.toLowerCase())
-          )
+          const isExactMatch = exactMatchModes[columnId] || false
+          filtered = filtered.filter(item => {
+            const itemValue = String(item[columnId as keyof BedData])
+            const filterValue = value
+            
+            if (isExactMatch) {
+              return itemValue.toLowerCase() === filterValue.toLowerCase()
+            } else {
+              return itemValue.toLowerCase().includes(filterValue.toLowerCase())
+            }
+          })
         }
       })
       
@@ -150,7 +157,7 @@ export default function Page() {
       setCurrentPage(1)
     }
     loadData()
-  }, [version, columnFilters, searchResult])
+  }, [version, columnFilters, exactMatchModes, searchResult])
 
   useEffect(() => {
     let filtered = allData
@@ -158,11 +165,17 @@ export default function Page() {
     // 先处理列筛选
     Object.entries(columnFilters).forEach(([columnId, value]) => {
       if (value) {
-        filtered = filtered.filter(item =>
-          String(item[columnId as keyof BedData])
-            .toLowerCase()
-            .includes(value.toLowerCase())
-        )
+        const isExactMatch = exactMatchModes[columnId] || false
+        filtered = filtered.filter(item => {
+          const itemValue = String(item[columnId as keyof BedData])
+          const filterValue = value
+          
+          if (isExactMatch) {
+            return itemValue.toLowerCase() === filterValue.toLowerCase()
+          } else {
+            return itemValue.toLowerCase().includes(filterValue.toLowerCase())
+          }
+        })
       }
     })
 
@@ -183,12 +196,19 @@ export default function Page() {
     } else if (filtered.length === 0) {
       setCurrentPage(1)  // 如果没有数据，重置到第一页
     }
-  }, [columnFilters, allData, searchResult, currentPage])
+  }, [columnFilters, exactMatchModes, allData, searchResult, currentPage])
 
   const handleColumnFilter = (columnId: string, value: string) => {
     setColumnFilters(prev => ({
       ...prev,
       [columnId]: value
+    }))
+  }
+
+  const handleExactMatchToggle = (columnId: string, isExact: boolean) => {
+    setExactMatchModes(prev => ({
+      ...prev,
+      [columnId]: isExact
     }))
   }
 
@@ -266,6 +286,8 @@ export default function Page() {
               <DataTable 
                 data={paginatedData}
                 onColumnFilter={handleColumnFilter}
+                onExactMatchToggle={handleExactMatchToggle}
+                exactMatchModes={exactMatchModes}
               />
               {paginatedData.length === 0 && (
                 <div className="text-center text-gray-500 py-4"></div>

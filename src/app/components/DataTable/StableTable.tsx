@@ -11,12 +11,16 @@ interface StableTableProps<TData> {
   }>
   data: TData[]
   onColumnFilter: (columnId: string, value: string) => void
+  onExactMatchToggle: (columnId: string, isExact: boolean) => void
+  exactMatchModes: Record<string, boolean>
 }
 
 export function StableTable<TData extends Record<string, unknown>>({
   columns,
   data,
   onColumnFilter,
+  onExactMatchToggle,
+  exactMatchModes,
 }: StableTableProps<TData>) {
   const tbodyRef = useRef<HTMLTableSectionElement>(null)
   const rowRefs = useRef<Map<string, HTMLTableRowElement>>(new Map())
@@ -140,12 +144,34 @@ export function StableTable<TData extends Record<string, unknown>>({
                   </div>
                   {column.canFilter && (
                     <div className="mt-2">
-                      <input
-                        type="text"
-                        onChange={e => handleFilterChange(column.id, e.target.value)}
-                        className="w-full px-2 py-1 border rounded text-sm"
-                        style={{ userSelect: 'text' }}
-                      />
+                      <div className="relative">
+                        <input
+                          type="text"
+                          onChange={e => handleFilterChange(column.id, e.target.value)}
+                          className="w-full px-2 py-1 pr-8 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          style={{ userSelect: 'text' }}
+                          placeholder="Filter..."
+                        />
+                        <button
+                          onClick={() => onExactMatchToggle(column.id, !exactMatchModes[column.id])}
+                          className={`absolute right-1 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded flex items-center justify-center transition-all duration-200 ${
+                            exactMatchModes[column.id]
+                              ? 'bg-blue-500 text-white shadow-md'
+                              : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                          }`}
+                          title={exactMatchModes[column.id] ? 'Exact Match Mode' : 'Fuzzy Match Mode'}
+                        >
+                          {exactMatchModes[column.id] ? (
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          ) : (
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                        </button>
+                      </div>
                     </div>
                   )}
                 </th>
