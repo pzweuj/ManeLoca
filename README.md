@@ -4,7 +4,7 @@ ManeLoca (MANE Locus) is a web tool that helps locate genomic coordinates within
 
 ## Use
 
-Use [ManeLoca Online](https://maneloca.biotools.site/) 
+Use [ManeLoca Online](https://maneloca.biotools.space/) 
 
 or [Install in windows](https://github.com/pzweuj/ManeLoca/releases)
 
